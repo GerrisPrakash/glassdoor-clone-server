@@ -54,3 +54,10 @@ class UserViewset(viewsets.ViewSet):
         querryset = User.objects.all()
         serialiser = self.serializer_class(querryset, many = True)
         return Response(serialiser.data)
+    
+class MeViewset(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        serializer = RegisterSerializer(request.user)
+        return Response(serializer.data)

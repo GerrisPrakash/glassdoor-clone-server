@@ -87,8 +87,11 @@ class JobListCreateAPIView(APIView):
     permission_classes = [IsEmployerOrReadOnly]
 
     def get(self, request):
-        jobs = Job.objects.all()
-        serializer = JobSerializer(jobs, many=True)
+        queryset = Job.objects.all()
+        company_id = request.query_params.get("company")
+        if company_id:
+            queryset = queryset.filter(company_id=company_id)
+        serializer = JobSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -131,8 +134,11 @@ class ReviewListCreateAPIView(APIView):
     permission_classes = [IsReviewerOrReadOnly]
 
     def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many=True)
+        queryset = Review.objects.all()
+        company_id = request.query_params.get("company")  # check if company filter exists
+        if company_id:
+            queryset = queryset.filter(company_id=company_id)
+        serializer = ReviewSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def post(self, request):

@@ -8,6 +8,7 @@ router = DefaultRouter()
 router.register('register', RegisterViewset, basename = 'register')
 router.register('login', LoginViweset, basename = 'login')
 router.register('users', UserViewset, basename = 'users')
+router.register("me", MeViewset, basename="me")  
 
 
 
