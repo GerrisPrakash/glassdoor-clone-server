@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app:delegated   # Mount project folder for hot reload
+    environment:
+      - DEBUG=1             # Django debug mode
+    command: python manage.py runserver 0.0.0.0:8000

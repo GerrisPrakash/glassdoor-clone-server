@@ -1,0 +1,22 @@
+# Dockerfile.dev - Django dev
+FROM python:3.12-slim
+
+# Set working directory
+WORKDIR /app
+
+# Prevent Python from buffering output (so logs show instantly)
+ENV PYTHONUNBUFFERED 1
+
+# Install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy project files
+COPY . .
+
+# Expose Django dev server port
+EXPOSE 8000
+
+# Default command to run Django dev server
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
